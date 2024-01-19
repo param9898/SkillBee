@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.scss"
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 export const  Navbar= () => {
     const [active,setActive] = useState(false);
     const [open,setOpen] = useState(false);
+    const { loginWithRedirect } = useAuth0();
 
     const {pathname} = useLocation();
 
@@ -41,22 +43,26 @@ export const  Navbar= () => {
                 <span>Explore</span>
                 <span>English</span>
                 {!currentUser?.isSeller && <span>Become a seller</span>}
-                <span>Sign in</span>
-                {!currentUser && <button>Join</button>}
-                {currentUser &&(
+                
+                {currentUser && <button onClick={() => loginWithRedirect()}>Log In</button>}
+                {!currentUser &&(
                     <div className="user" onClick={()=>setOpen(!open)}>
                         <img src="./src/user.png" alt="" />
                         <span>{currentUser?.username}</span>
                         {open && <div className="options">
                             {currentUser?.isSeller &&(
                                 <>
-                                    <Link to="mygigs" className='link'>Gig</Link>
-                                    <Link to="add" className='link'>New Gigs</Link>
+                                    <Link to="/mygigs" className='link'>Gig</Link>
+                                    <Link to="/add" className='link'>New Gigs</Link>
                                 </>
                             )}
-                            <Link to="order" className='link'>Orders</Link>
-                            <Link to="messages" className='link'>Messages</Link>
-                            <Link className='link'>Logout</Link>
+                            <Link to="/order" className='link'>Orders</Link>
+                            <Link to="/messages" className='link'>Messages</Link>
+                            <Link className='link'>
+                            <button className='logout' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                                Log Out
+                            </button>
+                            </Link>
                         </div>}
                     </div>
                 )}

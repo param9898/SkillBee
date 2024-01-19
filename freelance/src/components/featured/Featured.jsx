@@ -7,12 +7,13 @@ export const Featured = () =>  {
       <div className="container">
         <div className="left">
           <h1>
-            Find the perfect <span>freelance</span> services for your business
+            Find the right <span>freelance </span><br />
+            services, right away
           </h1>
           <div className="search">
             <div className="searchInput">
               <img src="./src/search.png" alt="" />
-              <input type="text" placeholder='Try "building mobil app"' />
+              <input type="text" placeholder='Search for any service...' />
             </div>
             <button>Search</button>
           </div>
